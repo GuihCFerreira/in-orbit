@@ -12,6 +12,8 @@ export function App() {
     staleTime: 1000 * 60,
   });
 
+  console.log(import.meta.env.VITE_API_BASE);
+
   return (
     <Dialog>
       {data?.total && data?.total > 0 ? <Summary /> : <EmptyGoals />}
