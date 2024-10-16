@@ -1,4 +1,5 @@
 import fastifyCors from "@fastify/cors";
+import dotenv from "dotenv";
 import fastify from "fastify";
 import {
   type ZodTypeProvider,
@@ -9,6 +10,13 @@ import { createCompletionRoute } from "./routes/create-completion";
 import { createGoalRoute } from "./routes/create-goal";
 import { getPendingGoalsRoute } from "./routes/get-pending.goals";
 import { getWeekSummaryRoute } from "./routes/get-week-summary";
+
+dotenv.config();
+
+var port = 3333;
+const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
+
+if (process.env.PORT != null) port = Number(process.env.PORT);
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -26,8 +34,9 @@ app.register(createCompletionRoute);
 
 app
   .listen({
-    port: 3333,
+    host: host,
+    port: port,
   })
   .then(() => {
-    console.log("HTTP server running on port 3333");
+    console.log(`HTTP server running on port ${port}`);
   });
